@@ -1,0 +1,22 @@
+FROM python:3.11-slim
+
+# Set working directory inside container
+WORKDIR /app
+
+ENV PYTHONPATH=/app
+# Copy only training code
+COPY training/ training/
+COPY data/ data/
+COPY artifacts/ artifacts/
+
+# Install dependencies
+RUN pip install --no-cache-dir \
+    numpy \
+    pandas \
+    scikit-multilearn \
+    scikit-learn==1.7.0 \
+    joblib \
+    pyarrow
+
+# Run full training pipeline
+CMD ["python", "training/model.py"]

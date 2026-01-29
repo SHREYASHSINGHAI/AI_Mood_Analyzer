@@ -1,0 +1,69 @@
+ai-mood-analyzer/
+├── data/
+│   ├── mapping/
+│   │   ├──ekman_mapping.json
+│   │   ├──emotions.txt
+│   │   └──sentiment_mapping.json
+│   ├── raw/
+│   │   └── full_dataset/
+│   │       ├── goemotions_1.csv
+│   │       ├── goemotions_2.csv
+│   │       └── goemotions_3.csv
+│   │
+│   ├── processed/
+│   │   └── processed.csv          # cleaned + filtered dataset
+│   │
+│   └── spliting/ 
+|       ├──emotion_labels.npy          #.npy contains what user said
+│       ├── X_train.npy                # frozen train features
+│       ├── y_train.npy                # frozen train labels
+│       ├── X_val.npy                  # validation features
+│       ├── y_val.npy                  # validation labels
+│       ├── X_test.npy                 # test features
+│       └── y_test.npy                 # test labels
+│
+├── artifacts/                      #.pkl contains what model understood
+│   ├── tfidf_vectorizer.pkl          # TF-IDF or tokenizer
+|   ├── config.json                   # pipeline configurations
+│   ├── label_map.json                # emotion index mapping
+│   └──  model.pkl                    # trained model (baseline)
+│  
+├── training/
+|   ├── __init__.py                   # Module declaration
+|   ├── create_label_map.py           # Mapping emotions to numbers
+│   ├── preprocess.py                 # data cleaning and preprocessing 
+│   ├── features.py                   # feature extraction / vectorization
+│   ├── model.py                      # model definitions
+│   └── evaluate.py                   # metrics & evaluation
+│   
+│
+├── inference/
+|   ├── __init__.py                   # module declararation
+│   ├── app.py                        # FastAPI inference service
+│   ├── schemas.py                    # request/response schemas
+│   ├── predictor.py                  # model loading + prediction logic
+│   └── test_inference.py             #
+│
+├── mlflow/
+│   ├── experiments/                  # MLflow runs & artifacts
+│   └── models/                       # registered models
+│
+├── monitoring/
+│   ├── prometheus.yml
+│   └── grafana/
+│       └── dashboards/
+│  
+├── tests/
+│   ├── test_data.py
+│   ├── test_features.py
+│   └── test_inference.py
+│
+├── docker-compose.yml
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+├──Dockerfile.train
+├──Dockerfile.infer
+├── .env
+├── .gitignore
+└── README.md
