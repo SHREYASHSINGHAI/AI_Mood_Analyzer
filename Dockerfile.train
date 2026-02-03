@@ -16,7 +16,8 @@ RUN pip install --no-cache-dir \
     scikit-multilearn \
     scikit-learn==1.7.0 \
     joblib \
-    pyarrow
+    pyarrow \
+    mlflow
 
 # Run full training pipeline
 CMD ["python", "training/model.py"]
