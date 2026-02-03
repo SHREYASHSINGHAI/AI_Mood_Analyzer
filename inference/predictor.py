@@ -1,38 +1,43 @@
 import os
-import joblib
 import json
+import joblib
 import numpy as np
+import streamlit as st
+
+# ------ Paths ------
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ARTIFACT_DIR = os.path.join(BASE_DIR, "artifacts")
+
+MODEL_PATH = os.path.join(ARTIFACT_DIR, "model.pkl")
+VECTORIZER_PATH = os.path.join(ARTIFACT_DIR, "tfidf_vectorizer.pkl")
 CONFIG_FILE = os.path.join(ARTIFACT_DIR, "config.json")
 LABEL_MAP_FILE = os.path.join(ARTIFACT_DIR, "label_map.json")
 
+# ------ Load artifacts (cached) ------
 
-# ------ Loading Artifacts ------
+@st.cache_resource
+def load_artifacts():
+    model = joblib.load(MODEL_PATH)
+    vectorizer = joblib.load(VECTORIZER_PATH)
 
-model = joblib.load(os.path.join(ARTIFACT_DIR, "model.pkl"))
-print("Model loaded successfully.")
+    with open(CONFIG_FILE, "r") as f:
+        config = json.load(f)
+        threshold = config["threshold"]
 
-vectorizer = joblib.load(os.path.join(ARTIFACT_DIR,"tfidf_vectorizer.pkl"))
-print("Vectorizer loaded successfully.")
+    with open(LABEL_MAP_FILE, "r") as f:
+        label_map = json.load(f)
 
-with open(CONFIG_FILE,"r") as f:
-    config = json.load(f)
-    threshold = config["threshold"]
-print("Configurations loaded successfully.")
-
-
-with open (LABEL_MAP_FILE,"r") as f:
-    label_map = json.load(f)
-print("Label map loaded successfully.")
+    return model, vectorizer, threshold, label_map
 
 # ------ Prediction Function ------
 
-def predict_emotions(text):
-    X = vectorizer.transform(text)
+def predict_emotions(texts):
+    model, vectorizer, threshold, label_map = load_artifacts()
+
+    X = vectorizer.transform(texts)
     y_proba = model.predict_proba(X)
-    y_pred = (y_proba>threshold).astype(int)
+    y_pred = (y_proba > threshold).astype(int)
 
     results = []
     for row in y_pred:
@@ -41,16 +46,3 @@ def predict_emotions(text):
         results.append(labels)
 
     return results
-if __name__ == "__main__":
-    samples = [
-        "I am so happy and excited about my new job!",
-        "I feel sad and lonely today.",
-        "This is a terrifying experience.",
-        "I am angry about the delay in my project.",
-        "I love spending time with my family."
-    ]
-    predictions = predict_emotions(samples)
-    for text, pred in zip(samples, predictions):
-        print(f"Text: {text}")
-        print(f"Predicted Emotions: {pred}")
-        print("-"*50)
