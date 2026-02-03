@@ -1,0 +1,8 @@
+{
+    "threshold": 0.2,               
+    "model_version": "v1",          
+    "problem_type": "multilabel_emotion_classification",
+    "vectorizer": "tfidf",          
+    "trained_on": "goemotions"      
+  }
+  

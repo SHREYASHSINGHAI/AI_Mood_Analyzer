@@ -1,7 +1,6 @@
 data/raw/
 data/processed/
 data/splitting/
-artifacts/
 .env
 __pycache__/
 *.pyc
