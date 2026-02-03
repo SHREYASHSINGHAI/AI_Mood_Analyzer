@@ -42,26 +42,12 @@ ai-mood-analyzer/
 │   ├── app.py                        # FastAPI inference service
 │   ├── schemas.py                    # request/response schemas
 │   ├── predictor.py                  # model loading + prediction logic
-│   └── test_inference.py             #
-│
-├── mlflow/
-│   ├── experiments/                  # MLflow runs & artifacts
-│   └── models/                       # registered models
-│
-├── monitoring/
-│   ├── prometheus.yml
-│   └── grafana/
-│       └── dashboards/
-│  
-├── tests/
-│   ├── test_data.py
-│   ├── test_features.py
-│   └── test_inference.py
+│   └── test_inference.py             # testing inference service                   
 │
 ├── docker-compose.yml
 ├── .github/
 │   └── workflows/
-│       └── ci.yml
+│       └── ci.yml                   
 ├──Dockerfile.train
 ├──Dockerfile.infer
 ├── .env

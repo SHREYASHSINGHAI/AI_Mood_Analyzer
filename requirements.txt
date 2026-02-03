@@ -1,0 +1,16 @@
+# Core ML
+numpy
+pandas
+scikit-learn
+joblib
+
+# API
+fastapi
+uvicorn
+pydantic
+
+# Experiment tracking
+mlflow<4
+
+# Utilities
+python-dotenv
