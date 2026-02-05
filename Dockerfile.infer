@@ -11,6 +11,7 @@ uvicorn \
 scikit-learn==1.7.0 \
 numpy \
 joblib \
+streamlit \
 && rm -rf /root/ .cache
 
 # API port
